@@ -1,0 +1,14 @@
+services:
+  assessment:
+    image: mrksdh/assessment
+    container_name: container1
+    ports:
+      - "8080:8080"
+
+  myapplication:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: container2
+    depends_on:
+      - assessment
