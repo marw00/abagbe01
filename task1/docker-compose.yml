@@ -1,14 +1,21 @@
+version: '3'
 services:
-  assessment:
-    image: mrksdh/assessment
-    container_name: container1
+  app:
+    build: .
+    container_name: cloud_usage_app  
+    depends_on:
+      - assessment_service
+    networks:
+      - cloud_network
+
+  assessment_service:
+    image: mrksdh/assessment  
+    container_name: assessment_container 
     ports:
       - "8080:8080"
+    networks:
+      - cloud_network
 
-  myapplication:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: container2
-    depends_on:
-      - assessment
+networks:
+  cloud_network:
+    driver: bridge
